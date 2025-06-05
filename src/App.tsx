@@ -3,8 +3,10 @@ import { Button } from '@mui/material'
 import './App.css'
 import MainStore from './stores/MainStore';
 import {Provider} from 'mobx-react';
+import ListPorts from './components/ListPorts';
+import MainLayout from "./layouts/MainLayout";
 
-class Store {
+export class Store {
   mainStore: MainStore;
   
   constructor()
@@ -17,15 +19,14 @@ const store = new Store();
 
 function App() {
   
+  if (!('serial' in navigator)) {
+    console.warn('Web Serial API is not supported in this browser');
+  }
   const [count, setCount] = useState(0)
 
   return (
     <Provider store={store}>
-       <Button variant="contained" onClick={()=>{
-           setCount(count + 1);
-         }}
-       >
-         Hello world {count}</Button>
+      <MainLayout/>
     </Provider>
   )
 }
